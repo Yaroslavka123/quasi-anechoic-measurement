@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "room-acoustics"
+version = "0.1.0"
+description = "Автоматическое квази-безэховое измерение АЧХ помещения и источника с частотно-зависимым окном"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Yaroslav"},
+]
+dependencies = [
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "matplotlib>=3.7",
+    "soundfile>=0.12",
+    "sounddevice>=0.4",
+    "click>=8.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "ruff>=0.1",
+]
+sim = [
+    "pyroomacoustics>=0.7",
+]
+whisper = [
+    "openai-whisper>=20231117",
+    "torch>=2.0",
+]
+
+[project.scripts]
+room-acoustics = "room_acoustics.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["room_acoustics*"]
+exclude = ["tests*", "scripts*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v --tb=short"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B"]
+ignore = ["E501"]
