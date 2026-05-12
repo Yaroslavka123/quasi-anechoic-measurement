@@ -30,14 +30,18 @@ Thumbs.db
 data/raw/*.wav
 data/raw/*.flac
 data/ir/*.wav
+data/reference/*.wav
+data/reference/*.mdat
 data/results/*.png
 data/results/*.pdf
 data/results/*.json
 
-# Allow .gitkeep
+# Allow .gitkeep and small REW exports (text only)
 !data/raw/.gitkeep
 !data/ir/.gitkeep
 !data/results/.gitkeep
+!data/reference/.gitkeep
+!data/reference/*.txt
 
 # Jupyter
 .ipynb_checkpoints/
