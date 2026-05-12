@@ -66,13 +66,34 @@ python scripts/synthetic_demo.py
 
 ### 3. Реальное измерение
 
-```bash
-# Записать (с loopback)
-python scripts/measure.py --output data/raw/room1.wav
+После `pip install -e .` доступна команда `room-acoustics`:
 
-# Проанализировать
-python scripts/analyze.py data/raw/room1.wav --output data/results/room1
+```bash
+# Сгенерировать свип
+room-acoustics make-sweep --duration 10 --output data/raw/sweep.wav
+
+# Проанализировать готовую IR.wav (например, экспортированную из REW)
+room-acoustics analyze data/reference/1.wav
+
+# Принудительно задать окно (когда автодетект ловит «ринг» рядом с прямым звуком)
+room-acoustics analyze data/reference/1.wav --window-ms 5
+
+# Сравнить АЧХ моего алгоритма с эталоном REW
+room-acoustics validate-rew data/reference/1.wav data/reference/1.txt
 ```
+
+### 4. Сравнение нескольких измерений (например, до/после акустической обработки)
+
+```bash
+python scripts/compare_treatment.py \
+    data/reference/1.wav data/reference/2.wav \
+    data/reference/3.wav data/reference/4.wav \
+    --labels "исходник" "после баса" "+ среднечастоты" "финал" \
+    --window-ms 5
+```
+
+Выдаст таблицу с EDT/T20/T30/C50/C80/D50/Floor и общий график со всеми
+ETC, кривыми Шрёдера, столбцами метрик и АЧХ на одном листе.
 
 ## Структура проекта
 
